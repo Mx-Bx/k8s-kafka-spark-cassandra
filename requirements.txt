@@ -1,0 +1,5 @@
+Flask
+requests
+cassandra-driver
+Werkzeug==0.16.1
+MarkupSafe==2.0.1 

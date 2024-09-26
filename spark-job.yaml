@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spark-streaming-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: spark-streaming
+        image: kubeflow/spark-operator:2.0.1  # Use the appropriate Spark image
+        command: ["/bin/sh", "-c"]
+        args: ["spark-submit --master local[*] --deploy-mode cluster spark_streaming.py"]
+      restartPolicy: Never
+

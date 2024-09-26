@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+  namespace: default
+spec:
+  ports:
+    - port: 2181
+  selector:
+    app: zookeeper
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+  namespace: default
+spec:
+  ports:
+    - port: 9092
+  selector:
+    app: kafka
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cassandra
+  namespace: default
+spec:
+  ports:
+    - port: 9042
+  selector:
+    app: cassandra
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 5000
+      nodePort: 30001
+  selector:
+    app: flask
+

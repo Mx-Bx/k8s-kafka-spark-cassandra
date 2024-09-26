@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kafka-producer
+spec:
+  template:
+    spec:
+      containers:
+      - name: kafka-producer
+        image: barryma22/kafka-producer:latest
+        command: ["python", "kafka_producer.py"]
+      restartPolicy: Never
+

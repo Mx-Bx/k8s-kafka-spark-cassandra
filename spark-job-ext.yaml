@@ -1,0 +1,37 @@
+apiVersion: sparkoperator.k8s.io/v1beta2
+kind: SparkApplication
+metadata:
+  name: spark-streaming-job
+  namespace: default
+spec:
+  type: Python
+  mode: cluster
+  image: gcr.io/spark-operator/spark-py:v3.1.1  # Pre-built Spark image for Python
+  imagePullPolicy: Always
+  mainApplicationFile: local:///opt/spark/jobs/spark_streaming.py  # Path inside the container
+  sparkVersion: "3.1.1"
+  restartPolicy:
+    type: Never
+  driver:
+    cores: 1
+    memory: 512m
+    labels:
+      version: 3.1.1
+    serviceAccount: spark  # Service account for the driver pod
+  executor:
+    cores: 1
+    instances: 2
+    memory: 1g
+  volumes:
+    - name: spark-job-volume
+      persistentVolumeClaim:
+        claimName: spark-pvc  # Replace with your PVC if needed
+  driver:
+    volumeMounts:
+      - name: spark-job-volume
+        mountPath: /opt/spark/jobs
+  executor:
+    volumeMounts:
+      - name: spark-job-volume
+        mountPath: /opt/spark/jobs
+
